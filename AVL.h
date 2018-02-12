@@ -24,7 +24,7 @@ protected:
 
     void rotateRR(BinNodePosi(T)p, BinNodePosi(T)q);
 
-    void insertFixUp(BinNodePosi(T)p);    //By rotate
+    void insertTree(List<T> tree2data);    //By rotate
     void insertFixUp2(BinNodePosi(T)p);    //By connect34
     using BST<T>::connect34;
 
@@ -32,6 +32,17 @@ public:
     using BST<T>::search;
 
     virtual BinNodePosi(T)insert(const T &);
+
+
+    List<T> avl_instersection(AVL<T>);
+
+    List<T> avl_union(AVL<T>);
+
+    List<T> avl_difference(AVL<T>);
+
+    bool avl_is_subtree(BinNodePosi(T));
+
+    bool avl_equals(AVL<T> *);
 
     virtual bool remove(const T &);
 
@@ -145,26 +156,13 @@ BinNodePosi(T)AVL<T>::insert(const T &e) {
 }
 
 template<typename T>
-void AVL<T>::insertFixUp(BinNodePosi(T)p) {
-    BinNodePosi(T)q;
-    q = tallerChild(p);
-    q = tallerChild(q);
+void AVL<T>::insertTree(List<T> tree2data) {
+//    List<T> data2;
+//    tree2.traverPre(data2);
 
-    if (p->lchild && q == p->lchild->lchild) {
-        rotateLL(q->parent, p);
-    } else if (p->rchild && q == p->rchild->rchild) {
-        rotateRR(q->parent, p);
-    } else if (p->lchild && q == p->lchild->rchild) {
-        rotateRR(q, q->parent);
-        this->updateHeightAbove(q->lchild);
-        rotateLL(p->lchild, p);
-    } else {
-        rotateLL(q, q->parent);
-        this->updateHeightAbove(q->rchild);
-        rotateRR(p->rchild, p);
-    }
 
-    this->updateHeightAbove(p);
+
+
 }
 
 template<typename T>
@@ -265,5 +263,67 @@ bool AVL<T>::remove(const T &e) {
     return true;
 }
 
+template<typename T>
+List<T> AVL<T>::avl_instersection(AVL<T> tree2) {
+    List<T> data2, result;
+    tree2.traverPre(data2);
+    Posi(T)p = data2.head();
+    while (p != data2.tail()) {
+        if (this->contains(p->data)) {
+            result.insertAsLast(p->data);
+        }
+        p = p->next;
+    }
+    return result;
+}
+
+template<typename T>
+List<T> AVL<T>::avl_union(AVL<T> tree2) {
+    List<T> tree1data, result;
+    this->traverPre(tree1data);
+    Posi(T)p = tree1data.head();
+    cout << p->data << '\t';
+    while (p != tree1data.tail()) {
+        tree2.insert(p->data);
+        p = p->next;
+    }
+    tree2.traverPre(result);
+    return result;
+}
+
+template<typename T>
+List<T> AVL<T>::avl_difference(AVL<T> tree2) {
+    List<T> data2, result;
+    tree2.traverPre(data2);
+    Posi(T)p = data2.head();
+    while (p != data2.tail()) {
+        this->remove(p->data);
+        p = p->next;
+    }
+    this->traverPre(result);
+    return result;
+}
+
+template<typename T>
+bool AVL<T>::avl_is_subtree(BinNodePosi(T)tree) {
+    if (tree == NULL) {
+        return true;
+    }
+    if (this->contains(tree->data)) {
+        if (!avl_is_subtree(tree->lchild)) {
+            return false;
+        }
+        return avl_is_subtree(tree->rchild);
+    }
+    return false;
+}
+
+template<typename T>
+bool AVL<T>::avl_equals(AVL<T> *tree) {
+    if (!this->avl_is_subtree(tree->root())) {
+        return false;
+    }
+    return tree->avl_is_subtree(this->root());
+}
 
 #endif //DATAS_COURSE_AVL_H

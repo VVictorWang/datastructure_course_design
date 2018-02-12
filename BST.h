@@ -16,6 +16,8 @@ public:
 
     virtual BinNodePosi(T)search(const T &);
 
+    virtual bool contains(const T &);
+
     virtual BinNodePosi(T)insert(const T &);
 
     virtual bool remove(const T &);
@@ -59,6 +61,11 @@ BinNodePosi(T)searchIn(BinNodePosi(T)root, const T &e, BinNodePosi(T)&hot) {
 template<typename T>
 BinNodePosi(T)BST<T>::search(const T &e) {
     return searchIn(_root, e, _hot);
+}
+
+template<typename T>
+bool BST<T>::contains(const T &e) {
+    return searchIn(_root, e, _hot) != NULL;
 }
 
 template<typename T>

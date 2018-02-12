@@ -7,25 +7,20 @@
 #ifndef DATAS_COURSE_QUEUE_H
 #define DATAS_COURSE_QUEUE_H
 
-#include <list>
+#include "List.h"
 
 template<typename T>
-class Queue : public std::list<T> {
+class Queue : public List<T> {
 public:
     void enqueue(T const &e) {
-        this->push_back(e);
+        this->insertAsLast(e);
     }
-
-    T rear() { return this->back()->data; }
-
-
+    T rear() { return this->last()->data; }
     T dequeue() {
-        T data = this->front();
-        this->pop_front();
+        T data = this->first()->data;
+        this->remove(this->first());
         return data;
     }
-
-
 };
 
 #endif //DATAS_COURSE_QUEUE_H
