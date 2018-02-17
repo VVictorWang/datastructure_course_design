@@ -9,7 +9,8 @@
 #include <QDebug>
 #include <QJsonArray>
 #include "./AVL/AVL.h"
-
+#include <QMessageBox>
+#include <QGraphicsView>
 
 namespace Ui {
 class loginwindow;
@@ -28,7 +29,7 @@ private:
     Ui::loginwindow *ui;
 
 signals:
-    void toMainWindow();
+    void toMainWindow(int,NodeAVL *);
 private slots:
     void onLoginClicked();
     bool validUser(QString,QString);

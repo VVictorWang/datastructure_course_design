@@ -30,9 +30,9 @@ void loginwindow::onLoginClicked(){
     QString name = ui->nameEdit->text();
     if(validUser(userId,name)){
         MainWindow *mainw = new MainWindow();
-        connect(this,SIGNAL(toMainWindow(int)),mainw,SLOT(enterMainWindow(int)));
-        emit toMainWindow(userId.toInt());
         mainw->show();
+        connect(this,SIGNAL(toMainWindow(int,NodeAVL *)),mainw,SLOT(enterMainWindow(int,NodeAVL *)));
+        emit toMainWindow(userId.toInt(),avl);
         this->hide();
     }else{
         qDebug() <<"error";
@@ -48,8 +48,9 @@ bool loginwindow::validUser(QString userId, QString name){
         InfoNode node;
         node.data.id = userId.toInt();
         node = avl->search(node)->data;
-        if(userId.toInt()==node.data.id && name.toStdString().compare(node.data.userName) == 0)
+        if(userId.toInt()==node.data.id)
             return true;
     }
+//    && name.toStdString().compare(node.data.userName) == 0
     return false;
 }

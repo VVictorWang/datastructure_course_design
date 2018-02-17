@@ -52,13 +52,17 @@ OBJECTS_DIR   = ./
 
 SOURCES       = main.cpp \
 		mainwindow.cpp \
-		loginwindow.cpp moc_mainwindow.cpp \
-		moc_loginwindow.cpp
+		loginwindow.cpp \
+		people_list.cpp moc_mainwindow.cpp \
+		moc_loginwindow.cpp \
+		moc_people_list.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		loginwindow.o \
+		people_list.o \
 		moc_mainwindow.o \
-		moc_loginwindow.o
+		moc_loginwindow.o \
+		moc_people_list.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -150,6 +154,7 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -170,9 +175,11 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/features/yacc.prf \
 		/usr/lib/qt/mkspecs/features/lex.prf \
 		datas_structure.pro mainwindow.h \
-		loginwindow.h main.cpp \
+		loginwindow.h \
+		people_list.h main.cpp \
 		mainwindow.cpp \
-		loginwindow.cpp
+		loginwindow.cpp \
+		people_list.cpp
 QMAKE_TARGET  = datas_structure
 DESTDIR       = 
 TARGET        = datas_structure
@@ -181,7 +188,7 @@ TARGET        = datas_structure
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_loginwindow.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_loginwindow.h ui_people_list.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: datas_structure.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -275,6 +282,7 @@ Makefile: datas_structure.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/
 		/usr/lib/qt/mkspecs/features/qt_config.prf \
 		/usr/lib/qt/mkspecs/linux-g++/qmake.conf \
 		/usr/lib/qt/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/usr/lib/qt/mkspecs/features/exclusive_builds.prf \
 		/usr/lib/qt/mkspecs/features/toolchain.prf \
 		/usr/lib/qt/mkspecs/features/default_pre.prf \
@@ -390,6 +398,7 @@ Makefile: datas_structure.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/
 /usr/lib/qt/mkspecs/features/qt_config.prf:
 /usr/lib/qt/mkspecs/linux-g++/qmake.conf:
 /usr/lib/qt/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /usr/lib/qt/mkspecs/features/exclusive_builds.prf:
 /usr/lib/qt/mkspecs/features/toolchain.prf:
 /usr/lib/qt/mkspecs/features/default_pre.prf:
@@ -428,9 +437,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h loginwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp loginwindow.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui loginwindow.ui $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h loginwindow.h people_list.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp loginwindow.cpp people_list.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.ui loginwindow.ui people_list.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -462,10 +471,18 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_loginwindow.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_loginwindow.cpp
-moc_mainwindow.cpp: mainwindow.h \
+	-$(DEL_FILE) moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp
+moc_mainwindow.cpp: AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		qflowlayout.h \
+		people_list.h \
+		mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include mainwindow.h -o moc_mainwindow.cpp
@@ -477,16 +494,29 @@ moc_loginwindow.cpp: mainwindow.h \
 		AVL/Queue.h \
 		AVL/List.h \
 		AVL/Info.h \
+		qflowlayout.h \
+		people_list.h \
 		loginwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include loginwindow.h -o moc_loginwindow.cpp
 
+moc_people_list.cpp: AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		people_list.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include people_list.h -o moc_people_list.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_loginwindow.h
+compiler_uic_make_all: ui_mainwindow.h ui_loginwindow.h ui_people_list.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_loginwindow.h
+	-$(DEL_FILE) ui_mainwindow.h ui_loginwindow.h ui_people_list.h
 ui_mainwindow.h: mainwindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic mainwindow.ui -o ui_mainwindow.h
@@ -494,6 +524,10 @@ ui_mainwindow.h: mainwindow.ui \
 ui_loginwindow.h: loginwindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic loginwindow.ui -o ui_loginwindow.h
+
+ui_people_list.h: people_list.ui \
+		/usr/bin/uic
+	/usr/bin/uic people_list.ui -o ui_people_list.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -506,24 +540,28 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 ####### Compile
 
 main.o: main.cpp mainwindow.h \
-		loginwindow.h \
 		AVL/AVL.h \
 		AVL/BST.h \
 		AVL/BinTree.h \
 		AVL/Queue.h \
 		AVL/List.h \
-		AVL/Info.h
+		AVL/Info.h \
+		qflowlayout.h \
+		people_list.h \
+		loginwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
-		ui_mainwindow.h \
-		loginwindow.h \
 		AVL/AVL.h \
 		AVL/BST.h \
 		AVL/BinTree.h \
 		AVL/Queue.h \
 		AVL/List.h \
-		AVL/Info.h
+		AVL/Info.h \
+		qflowlayout.h \
+		people_list.h \
+		ui_mainwindow.h \
+		loginwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 loginwindow.o: loginwindow.cpp loginwindow.h \
@@ -534,14 +572,29 @@ loginwindow.o: loginwindow.cpp loginwindow.h \
 		AVL/Queue.h \
 		AVL/List.h \
 		AVL/Info.h \
+		qflowlayout.h \
+		people_list.h \
 		ui_loginwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o loginwindow.o loginwindow.cpp
+
+people_list.o: people_list.cpp people_list.h \
+		AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		ui_people_list.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o people_list.o people_list.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
 moc_loginwindow.o: moc_loginwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_loginwindow.o moc_loginwindow.cpp
+
+moc_people_list.o: moc_people_list.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_people_list.o moc_people_list.cpp
 
 ####### Install
 

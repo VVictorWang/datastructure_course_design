@@ -380,4 +380,5 @@ bool AVL<T>::avl_equals(AVL<T> *tree) {
     return tree->avl_is_subtree(this->root());
 }
 
+typedef AVL<InfoNode> NodeAVL;
 #endif //DATAS_COURSE_AVL_H

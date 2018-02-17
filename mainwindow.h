@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "./AVL/AVL.h"
+#include "people_list.h"
+#include <QTabWidget>
 
 namespace Ui {
 class MainWindow;
@@ -14,11 +17,13 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    int userId;
+    AVL<InfoNode> *avl;
 
 private:
     Ui::MainWindow *ui;
 private slots:
-    void enterMainWindow();
+    void enterMainWindow(int,NodeAVL *);
 };
 
 #endif // MAINWINDOW_H

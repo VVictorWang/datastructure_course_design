@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_loginwindow_t {
-    QByteArrayData data[5];
-    char stringdata0[51];
+    QByteArrayData data[6];
+    char stringdata0[60];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,12 +34,13 @@ static const qt_meta_stringdata_loginwindow_t qt_meta_stringdata_loginwindow = {
 QT_MOC_LITERAL(0, 0, 11), // "loginwindow"
 QT_MOC_LITERAL(1, 12, 12), // "toMainWindow"
 QT_MOC_LITERAL(2, 25, 0), // ""
-QT_MOC_LITERAL(3, 26, 14), // "onLoginClicked"
-QT_MOC_LITERAL(4, 41, 9) // "validUser"
+QT_MOC_LITERAL(3, 26, 8), // "NodeAVL*"
+QT_MOC_LITERAL(4, 35, 14), // "onLoginClicked"
+QT_MOC_LITERAL(5, 50, 9) // "validUser"
 
     },
-    "loginwindow\0toMainWindow\0\0onLoginClicked\0"
-    "validUser"
+    "loginwindow\0toMainWindow\0\0NodeAVL*\0"
+    "onLoginClicked\0validUser"
 };
 #undef QT_MOC_LITERAL
 
@@ -57,14 +58,14 @@ static const uint qt_meta_data_loginwindow[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   29,    2, 0x06 /* Public */,
+       1,    2,   29,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,   30,    2, 0x08 /* Private */,
-       4,    2,   31,    2, 0x08 /* Private */,
+       4,    0,   34,    2, 0x08 /* Private */,
+       5,    2,   35,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 3,    2,    2,
 
  // slots: parameters
     QMetaType::Void,
@@ -79,7 +80,7 @@ void loginwindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         loginwindow *_t = static_cast<loginwindow *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->toMainWindow(); break;
+        case 0: _t->toMainWindow((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< NodeAVL*(*)>(_a[2]))); break;
         case 1: _t->onLoginClicked(); break;
         case 2: { bool _r = _t->validUser((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
@@ -89,7 +90,7 @@ void loginwindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (loginwindow::*_t)();
+            typedef void (loginwindow::*_t)(int , NodeAVL * );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&loginwindow::toMainWindow)) {
                 *result = 0;
                 return;
@@ -135,9 +136,10 @@ int loginwindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void loginwindow::toMainWindow()
+void loginwindow::toMainWindow(int _t1, NodeAVL * _t2)
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE
