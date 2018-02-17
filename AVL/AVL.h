@@ -51,6 +51,8 @@ public:
 
     virtual bool remove(const T &);
 
+    AVL<T> buid_avl_by_list(ListNode<T> data);
+
 };
 
 template<typename T>
@@ -378,6 +380,17 @@ bool AVL<T>::avl_equals(AVL<T> *tree) {
         return false;
     }
     return tree->avl_is_subtree(this->root());
+}
+
+template <typename T>
+AVL<T> AVL<T>::buid_avl_by_list(ListNode<T> data) {
+    AVL<T> *avl = new AVL<T>;
+    ListNode<T> *p = &data;
+    while (p != NULL) {
+        avl->insert(p->data);
+        p = p->next;
+    }
+    return *avl;
 }
 
 typedef AVL<InfoNode> NodeAVL;

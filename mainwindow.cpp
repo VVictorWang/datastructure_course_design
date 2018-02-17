@@ -19,7 +19,7 @@ void MainWindow::enterMainWindow(int user,NodeAVL *info){
     avl = info;
     qDebug()<<avl->size();
     people_list *friends = new people_list();
-    friends->setData(avl);
+    friends->setData(avl,userId);
     QIcon icon1("/home/victor/qt/datas_structure/weibo_icon.png");
     ui->tabs->addTab(friends,icon1,"friends");
 //    for(int i =1;i<=avl->size();i++){
