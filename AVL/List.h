@@ -75,6 +75,8 @@ public:
 
     T remove(Posi(T)p);
 
+    void clear();
+
     bool disordered();
 
     void sort();
@@ -243,6 +245,15 @@ Posi(T)List<T>::search(T e) {
         x = x->next;
     }
     return x->pred;
+}
+
+template <typename T>
+void List<T>::clear() {
+    Posi(T)p = this->head();
+    while (p != this->tail()) {
+        this->remove(p);
+        p = p->next;
+    }
 }
 
 #endif //DATAS_COURSE_LIST_H

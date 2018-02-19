@@ -16,13 +16,15 @@ class people_list : public QWidget
 
 public:
     explicit people_list(QWidget *parent = 0);
-    void setData(NodeAVL *avl,int userId);
-    NodeAVL *avl;
+    void setData(NodeAVL *avl,NodeAVL *total,int userId);
+    NodeAVL *avl,*total;
     int userId;
+
+    int searchNode(QString);
     ~people_list();
 
 public slots:
-     void toPerson_Specific();
+     void toPerson_Specific(QListWidgetItem *);
 private:
     Ui::people_list *ui;
 };

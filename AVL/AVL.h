@@ -51,7 +51,7 @@ public:
 
     virtual bool remove(const T &);
 
-    AVL<T> buid_avl_by_list(ListNode<T> data);
+    AVL<T> buid_avl_by_list(ListNode<T> *data);
 
 };
 
@@ -177,6 +177,7 @@ void AVL<T>::build_avl(QJsonArray data){
          QJsonObject obj = data.at(i-1).toObject();
          QJsonArray friends = obj.value("friends").toArray();
          QJsonArray fans = obj.value("fans").toArray();
+         QJsonArray attentions = obj.value("attentions").toArray();
          InfoNode *node = new InfoNode();
          node->data.id = i;
          node->next = NULL;
@@ -194,18 +195,36 @@ void AVL<T>::build_avl(QJsonArray data){
          }
          BinNodePosi(InfoNode) pos = this->search(*head);
          pos->data.data.friends = head->next;
+
+         node = new InfoNode();
          node->next = node->pred = NULL;
          head = node;
          for(int j = 0;j<fans.count();j++){
              InfoNode *p = new InfoNode();
              p->data.id = fans.at(j).toInt();
-             p = &(this->search(*p)->data);
+             InfoNode q = (this->search(*p)->data);
+             p->data = q.data;
              p->pred =node;
              p->next = NULL;
              node->next = p;
              node =p;
          }
          pos->data.data.fans = head->next;
+
+         node = new InfoNode();
+         node->next = node->pred = NULL;
+         head = node;
+         for(int j = 0;j<attentions.count();j++){
+             InfoNode *p = new InfoNode();
+             p->data.id = attentions.at(j).toInt();
+             InfoNode q = (this->search(*p)->data);
+             p->data = q.data;
+             p->pred =node;
+             p->next = NULL;
+             node->next = p;
+             node =p;
+         }
+         pos->data.data.attention = head->next;
 
 
     }
@@ -335,16 +354,16 @@ List<T> AVL<T>::avl_instersection(AVL<T> tree2) {
 
 template<typename T>
 List<T> AVL<T>::avl_union(AVL<T> tree2) {
-    List<T> tree1data, result;
-    this->traverPre(tree1data);
-    Posi(T)p = tree1data.head();
-    cout << p->data << '\t';
-    while (p != tree1data.tail()) {
-        tree2.insert(p->data);
-        p = p->next;
-    }
-    tree2.traverPre(result);
-    return result;
+//    List<T> tree1data, result;
+//    this->traverPre(tree1data);
+//    Posi(T)p = tree1data.head();
+//    cout << p->data << '\t';
+//    while (p != tree1data.tail()) {
+//        tree2.insert(p->data);
+//        p = p->next;
+//    }
+//    tree2.traverPre(result);
+//    return result;
 }
 
 template<typename T>
@@ -383,9 +402,9 @@ bool AVL<T>::avl_equals(AVL<T> *tree) {
 }
 
 template <typename T>
-AVL<T> AVL<T>::buid_avl_by_list(ListNode<T> data) {
+AVL<T> AVL<T>::buid_avl_by_list(ListNode<T> *data) {
     AVL<T> *avl = new AVL<T>;
-    ListNode<T> *p = &data;
+    ListNode<T> *p = data;
     while (p != NULL) {
         avl->insert(p->data);
         p = p->next;

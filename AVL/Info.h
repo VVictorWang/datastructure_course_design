@@ -14,19 +14,19 @@
 
 class Info {
     friend std::ostream &operator<<(std::ostream &out, const Info &t){
-        out << t.id<<" name: "<<t.userName;
-        InfoNode *p = t.friends;
-        out<<" friends: ";
-        while(p!=NULL){
-             out<<p->data.userName<<" ";
-             p = p->next;
-        }
-        p = t.fans;
-        out<<" fans: ";
-        while(p!=NULL){
-             out<<p->data.userName<<" ";
-             p = p->next;
-        }
+        out << t.id;
+//        InfoNode *p = t.friends;
+//        out<<" friends: ";
+//        while(p!=NULL){
+//             out<<p->data.userName<<" ";
+//             p = p->next;
+//        }
+//        p = t.fans;
+//        out<<" fans: ";
+//        while(p!=NULL){
+//             out<<p->data.userName<<" ";
+//             p = p->next;
+//        }
         return out;
     }
 

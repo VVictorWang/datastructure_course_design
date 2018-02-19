@@ -13,22 +13,36 @@ people_list::~people_list()
     delete ui;
 }
 
-void people_list::setData(NodeAVL *data,int user){
-    userId = user;
-    avl = data;
-    for(int i =1;i<=avl->size();i++){
-           InfoNode node;
-           node.data.id = i;
-           node = avl->search(node)->data;
-           QListWidgetItem *item = new QListWidgetItem;
-           item->setText(QString::fromStdString(node.data.userName.append(to_string(node.data.id))));
-           ui->listWidget->addItem(item);
+int people_list::searchNode(QString name){
+    List<InfoNode> da;
+    avl->traverPre(da);
+    Posi(InfoNode)p = da.head();
+    while (p!=da.tail()) {
+        if(p->data.data.userName.compare(name.toStdString()) == 0)
+            return p->data.data.id;
+        p = p->next;
     }
-    connect(ui->listWidget,SIGNAL(itemClicked(QListWidgetItem*)),this,SLOT(toPerson_Specific()));
+    return -1;
 }
 
-void people_list::toPerson_Specific(){
+void people_list::setData(NodeAVL *data,NodeAVL *total,int user){
+    userId = user;
+    avl = data;
+    this->total = total;
+    List<InfoNode> da;
+    avl->traverPre(da);
+    Posi(InfoNode)p = da.head();
+    while (p != da.tail()) {
+        QListWidgetItem *item = new QListWidgetItem;
+        item->setText(QString::fromStdString(p->data.data.userName));
+        ui->listWidget->addItem(item);
+        p = p->next;
+    }
+    connect(ui->listWidget,SIGNAL(itemDoubleClicked(QListWidgetItem*)),this,SLOT(toPerson_Specific(QListWidgetItem *)));
+}
+
+void people_list::toPerson_Specific(QListWidgetItem *current){
     Person_Specific *person_specific = new Person_Specific();
-    person_specific->setData(avl,ui->listWidget->currentRow()+1,userId);
+    person_specific->setData(total,searchNode(current->text()),userId);
     person_specific->show();
 }

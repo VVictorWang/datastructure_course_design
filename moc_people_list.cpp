@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_people_list_t {
-    QByteArrayData data[3];
-    char stringdata0[31];
+    QByteArrayData data[4];
+    char stringdata0[48];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -33,10 +33,12 @@ static const qt_meta_stringdata_people_list_t qt_meta_stringdata_people_list = {
     {
 QT_MOC_LITERAL(0, 0, 11), // "people_list"
 QT_MOC_LITERAL(1, 12, 17), // "toPerson_Specific"
-QT_MOC_LITERAL(2, 30, 0) // ""
+QT_MOC_LITERAL(2, 30, 0), // ""
+QT_MOC_LITERAL(3, 31, 16) // "QListWidgetItem*"
 
     },
-    "people_list\0toPerson_Specific\0"
+    "people_list\0toPerson_Specific\0\0"
+    "QListWidgetItem*"
 };
 #undef QT_MOC_LITERAL
 
@@ -54,10 +56,10 @@ static const uint qt_meta_data_people_list[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   19,    2, 0x0a /* Public */,
+       1,    1,   19,    2, 0x0a /* Public */,
 
  // slots: parameters
-    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 3,    2,
 
        0        // eod
 };
@@ -68,11 +70,10 @@ void people_list::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         people_list *_t = static_cast<people_list *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->toPerson_Specific(); break;
+        case 0: _t->toPerson_Specific((*reinterpret_cast< QListWidgetItem*(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject people_list::staticMetaObject = {

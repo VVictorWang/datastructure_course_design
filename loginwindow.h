@@ -11,6 +11,7 @@
 #include "./AVL/AVL.h"
 #include <QMessageBox>
 #include <QGraphicsView>
+#include "playavl.h"
 
 namespace Ui {
 class loginwindow;
@@ -32,6 +33,7 @@ signals:
     void toMainWindow(int,NodeAVL *);
 private slots:
     void onLoginClicked();
+    void onDrawAVLClicked();
     bool validUser(QString,QString);
 };
 

@@ -31,6 +31,7 @@ public:
     QPushButton *loginButton;
     QLineEdit *idEdit;
     QLineEdit *nameEdit;
+    QPushButton *drawAVL;
 
     void setupUi(QDialog *loginwindow)
     {
@@ -55,6 +56,9 @@ public:
         nameEdit = new QLineEdit(loginwindow);
         nameEdit->setObjectName(QStringLiteral("nameEdit"));
         nameEdit->setGeometry(QRect(190, 150, 171, 21));
+        drawAVL = new QPushButton(loginwindow);
+        drawAVL->setObjectName(QStringLiteral("drawAVL"));
+        drawAVL->setGeometry(QRect(230, 240, 80, 23));
 
         retranslateUi(loginwindow);
 
@@ -67,6 +71,7 @@ public:
         label->setText(QApplication::translate("loginwindow", "\347\224\250\346\210\267id", Q_NULLPTR));
         label_2->setText(QApplication::translate("loginwindow", "\345\247\223\345\220\215", Q_NULLPTR));
         loginButton->setText(QApplication::translate("loginwindow", "\347\231\273\345\275\225", Q_NULLPTR));
+        drawAVL->setText(QApplication::translate("loginwindow", "AVL\346\274\224\347\244\272", Q_NULLPTR));
     } // retranslateUi
 
 };

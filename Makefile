@@ -54,19 +54,27 @@ SOURCES       = main.cpp \
 		mainwindow.cpp \
 		loginwindow.cpp \
 		people_list.cpp \
-		person_specific.cpp moc_mainwindow.cpp \
+		person_specific.cpp \
+		playavl.cpp \
+		drawavl.cpp moc_mainwindow.cpp \
 		moc_loginwindow.cpp \
 		moc_people_list.cpp \
-		moc_person_specific.cpp
+		moc_person_specific.cpp \
+		moc_playavl.cpp \
+		moc_drawavl.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		loginwindow.o \
 		people_list.o \
 		person_specific.o \
+		playavl.o \
+		drawavl.o \
 		moc_mainwindow.o \
 		moc_loginwindow.o \
 		moc_people_list.o \
-		moc_person_specific.o
+		moc_person_specific.o \
+		moc_playavl.o \
+		moc_drawavl.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -181,11 +189,15 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		datas_structure.pro mainwindow.h \
 		loginwindow.h \
 		people_list.h \
-		person_specific.h main.cpp \
+		person_specific.h \
+		playavl.h \
+		drawavl.h main.cpp \
 		mainwindow.cpp \
 		loginwindow.cpp \
 		people_list.cpp \
-		person_specific.cpp
+		person_specific.cpp \
+		playavl.cpp \
+		drawavl.cpp
 QMAKE_TARGET  = datas_structure
 DESTDIR       = 
 TARGET        = datas_structure
@@ -194,7 +206,7 @@ TARGET        = datas_structure
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: datas_structure.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -443,9 +455,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h loginwindow.h people_list.h person_specific.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp loginwindow.cpp people_list.cpp person_specific.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui loginwindow.ui people_list.ui person_specific.ui $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h loginwindow.h people_list.h person_specific.h playavl.h drawavl.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp loginwindow.cpp people_list.cpp person_specific.cpp playavl.cpp drawavl.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.ui loginwindow.ui people_list.ui person_specific.ui playavl.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -477,9 +489,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp moc_playavl.cpp moc_drawavl.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp moc_playavl.cpp moc_drawavl.cpp
 moc_mainwindow.cpp: AVL/AVL.h \
 		AVL/BST.h \
 		AVL/BinTree.h \
@@ -502,6 +514,8 @@ moc_loginwindow.cpp: mainwindow.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
+		playavl.h \
+		drawavl.h \
 		loginwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -519,16 +533,45 @@ moc_people_list.cpp: AVL/AVL.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include people_list.h -o moc_people_list.cpp
 
-moc_person_specific.cpp: person_specific.h \
+moc_person_specific.cpp: AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		person_specific.h \
 		moc_predefs.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include person_specific.h -o moc_person_specific.cpp
 
+moc_playavl.cpp: drawavl.h \
+		AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		playavl.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include playavl.h -o moc_playavl.cpp
+
+moc_drawavl.cpp: AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		drawavl.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include drawavl.h -o moc_drawavl.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h
+compiler_uic_make_all: ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h
+	-$(DEL_FILE) ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h
 ui_mainwindow.h: mainwindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic mainwindow.ui -o ui_mainwindow.h
@@ -544,6 +587,10 @@ ui_people_list.h: people_list.ui \
 ui_person_specific.h: person_specific.ui \
 		/usr/bin/uic
 	/usr/bin/uic person_specific.ui -o ui_person_specific.h
+
+ui_playavl.h: playavl.ui \
+		/usr/bin/uic
+	/usr/bin/uic playavl.ui -o ui_playavl.h
 
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
@@ -564,7 +611,9 @@ main.o: main.cpp mainwindow.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
-		loginwindow.h
+		loginwindow.h \
+		playavl.h \
+		drawavl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o main.cpp
 
 mainwindow.o: mainwindow.cpp mainwindow.h \
@@ -577,7 +626,9 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		people_list.h \
 		person_specific.h \
 		ui_mainwindow.h \
-		loginwindow.h
+		loginwindow.h \
+		playavl.h \
+		drawavl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o mainwindow.cpp
 
 loginwindow.o: loginwindow.cpp loginwindow.h \
@@ -590,6 +641,8 @@ loginwindow.o: loginwindow.cpp loginwindow.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
+		playavl.h \
+		drawavl.h \
 		ui_loginwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o loginwindow.o loginwindow.cpp
 
@@ -605,8 +658,34 @@ people_list.o: people_list.cpp people_list.h \
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o people_list.o people_list.cpp
 
 person_specific.o: person_specific.cpp person_specific.h \
+		AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
 		ui_person_specific.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o person_specific.o person_specific.cpp
+
+playavl.o: playavl.cpp playavl.h \
+		drawavl.h \
+		AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		ui_playavl.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o playavl.o playavl.cpp
+
+drawavl.o: drawavl.cpp drawavl.h \
+		AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o drawavl.o drawavl.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
@@ -619,6 +698,12 @@ moc_people_list.o: moc_people_list.cpp
 
 moc_person_specific.o: moc_person_specific.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_person_specific.o moc_person_specific.cpp
+
+moc_playavl.o: moc_playavl.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_playavl.o moc_playavl.cpp
+
+moc_drawavl.o: moc_drawavl.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_drawavl.o moc_drawavl.cpp
 
 ####### Install
 

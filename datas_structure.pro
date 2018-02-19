@@ -27,14 +27,19 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     loginwindow.cpp \
     people_list.cpp \
-    person_specific.cpp
+    person_specific.cpp \
+    playavl.cpp \
+    drawavl.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
     people_list.h \
-    person_specific.h
+    person_specific.h \
+    playavl.h \
+    drawavl.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
     people_list.ui \
-    person_specific.ui
+    person_specific.ui \
+    playavl.ui

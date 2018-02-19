@@ -14,10 +14,11 @@ loginwindow::loginwindow(QWidget *parent) :
         QJsonArray jsonOb = doc.object().value("data").toArray();
         avl = new AVL<InfoNode>;
         avl->build_avl(jsonOb);
-        avl->display();
+//        avl->display();
     }
     ui->setupUi(this);
     QObject::connect(ui->loginButton,SIGNAL(clicked(bool)),this,SLOT(onLoginClicked()));
+    QObject::connect(ui->drawAVL,SIGNAL(clicked(bool)),this,SLOT(onDrawAVLClicked()));
 }
 
 loginwindow::~loginwindow()
@@ -37,6 +38,13 @@ void loginwindow::onLoginClicked(){
     }else{
         qDebug() <<"error";
     }
+}
+
+
+void loginwindow::onDrawAVLClicked(){
+    PlayAVL *play = new PlayAVL();
+    play->setData(avl);
+    play->show();
 }
 
 bool loginwindow::validUser(QString userId, QString name){
