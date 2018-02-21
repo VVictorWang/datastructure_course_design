@@ -3,7 +3,8 @@
 
 #include <QWidget>
 #include "drawavl.h"
-#include <QHBoxLayout>
+#include <QLineEdit>
+#include <QPushButton>
 
 namespace Ui {
 class PlayAVL;
@@ -19,7 +20,12 @@ public:
     void updateUI();
     NodeAVL *bst;
     DrawAVL *drawAvl;
+    void paintEvent(QPaintEvent *);
     ~PlayAVL();
+
+private slots:
+    void on_add_clicked();
+    void on_remove_clicked();
 
 private:
     Ui::PlayAVL *ui;

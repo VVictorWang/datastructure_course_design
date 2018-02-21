@@ -13,8 +13,9 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -22,20 +23,28 @@ QT_BEGIN_NAMESPACE
 class Ui_PlayAVL
 {
 public:
-    QWidget *horizontalLayoutWidget;
-    QHBoxLayout *hLayout;
+    QPushButton *insertBtn;
+    QPushButton *removeBtn;
+    QLineEdit *addEdit;
+    QLineEdit *removeEdit;
 
     void setupUi(QWidget *PlayAVL)
     {
         if (PlayAVL->objectName().isEmpty())
             PlayAVL->setObjectName(QStringLiteral("PlayAVL"));
-        PlayAVL->resize(542, 512);
-        horizontalLayoutWidget = new QWidget(PlayAVL);
-        horizontalLayoutWidget->setObjectName(QStringLiteral("horizontalLayoutWidget"));
-        horizontalLayoutWidget->setGeometry(QRect(20, 20, 491, 471));
-        hLayout = new QHBoxLayout(horizontalLayoutWidget);
-        hLayout->setObjectName(QStringLiteral("hLayout"));
-        hLayout->setContentsMargins(0, 0, 0, 0);
+        PlayAVL->resize(898, 569);
+        insertBtn = new QPushButton(PlayAVL);
+        insertBtn->setObjectName(QStringLiteral("insertBtn"));
+        insertBtn->setGeometry(QRect(130, 520, 71, 31));
+        removeBtn = new QPushButton(PlayAVL);
+        removeBtn->setObjectName(QStringLiteral("removeBtn"));
+        removeBtn->setGeometry(QRect(410, 520, 71, 31));
+        addEdit = new QLineEdit(PlayAVL);
+        addEdit->setObjectName(QStringLiteral("addEdit"));
+        addEdit->setGeometry(QRect(50, 520, 81, 31));
+        removeEdit = new QLineEdit(PlayAVL);
+        removeEdit->setObjectName(QStringLiteral("removeEdit"));
+        removeEdit->setGeometry(QRect(330, 520, 81, 31));
 
         retranslateUi(PlayAVL);
 
@@ -45,6 +54,8 @@ public:
     void retranslateUi(QWidget *PlayAVL)
     {
         PlayAVL->setWindowTitle(QApplication::translate("PlayAVL", "Form", Q_NULLPTR));
+        insertBtn->setText(QApplication::translate("PlayAVL", "\346\217\222\345\205\245", Q_NULLPTR));
+        removeBtn->setText(QApplication::translate("PlayAVL", "\345\210\240\351\231\244", Q_NULLPTR));
     } // retranslateUi
 
 };

@@ -11,7 +11,7 @@ class DrawAVL : public QWidget
      Q_OBJECT
 public:
     NodeAVL *bst;
-    DrawAVL(QWidget *parent );
+    DrawAVL(QWidget *parent =0);
     void paintEvent(QPaintEvent *);
     void setData(NodeAVL *avl);
 };

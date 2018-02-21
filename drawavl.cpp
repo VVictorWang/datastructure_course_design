@@ -1,6 +1,6 @@
 #include "drawavl.h"
 
-DrawAVL::DrawAVL(QWidget *parent = 0):QWidget(parent)
+DrawAVL::DrawAVL(QWidget *parent):QWidget(parent)
 {
    bst = new NodeAVL;
 }

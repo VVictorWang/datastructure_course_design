@@ -33,11 +33,15 @@ void Person_Specific::setData(NodeAVL *total,int current,int user){
     ui->nameLabel->setText(QString::fromStdString(node.data.userName));
 
     NodeAVL friends = build_avl_by_list(node.data.friends);
-    friends.display();
+    NodeAVL fans = build_avl_by_list(node.data.fans);
+    NodeAVL attentions = build_avl_by_list(node.data.attention);
+
     node.data.id = userId;
     node = total->search(node)->data;
     NodeAVL myFriends = build_avl_by_list((node.data.friends));
-    myFriends.display();
+    NodeAVL myFans = build_avl_by_list((node.data.fans));
+    NodeAVL myAttention = build_avl_by_list(node.data.attention);
+
     List<InfoNode> tree1data, result;
     friends.traverPre(tree1data);
     Posi(InfoNode)p = tree1data.head();
@@ -55,28 +59,40 @@ void Person_Specific::setData(NodeAVL *total,int current,int user){
         p = p->next;
     }
 
-    node.data.id = current;
-    node = total->search(node)->data;
-    NodeAVL fans = build_avl_by_list(node.data.fans);
-    fans.display();
-    node.data.id = userId;
-    node = total->search(node)->data;
-    NodeAVL myFans = build_avl_by_list((node.data.fans));
-    myFans.display();
-    List<InfoNode> tree2data,result2;
-    fans.traverPre(tree2data);
-    p = tree2data.head();
-    while (p != tree2data.tail()) {
+
+    tree1data.clear();
+    result.clear();
+    fans.traverPre(tree1data);
+    p = tree1data.head();
+    while (p != tree1data.tail()) {
         if (myFans.contains(p->data)) {
-              result2.insertAsLast(p->data);
+              result.insertAsLast(p->data);
          }
         p = p->next;
     }
-    p = result2.head();
+    p = result.head();
     ui->fans->setAlignment(Qt::AlignTop | Qt::AlignLeft);
     ui->fans->setWordWrap(true);
-    while(p!=result2.tail()){
-        ui->fans->setText(ui->friends->text().append("  ").append(QString::fromStdString(p->data.data.userName)));
+    while(p!=result.tail()){
+        ui->fans->setText(ui->fans->text().append("  ").append(QString::fromStdString(p->data.data.userName)));
+        p = p->next;
+    }
+
+    tree1data.clear();
+    result.clear();
+    attentions.traverPre(tree1data);
+    p = tree1data.head();
+    while (p != tree1data.tail()) {
+        if (myAttention.contains(p->data)) {
+              result.insertAsLast(p->data);
+         }
+        p = p->next;
+    }
+    p = result.head();
+    ui->attentions->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+    ui->attentions->setWordWrap(true);
+    while(p!=result.tail()){
+        ui->attentions->setText(ui->attentions->text().append("  ").append(QString::fromStdString(p->data.data.userName)));
         p = p->next;
     }
 }

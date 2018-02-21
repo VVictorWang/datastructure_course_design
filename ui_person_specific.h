@@ -32,6 +32,8 @@ public:
     QLabel *friends;
     QLabel *label_5;
     QLabel *fans;
+    QLabel *label_6;
+    QLabel *attentions;
 
     void setupUi(QWidget *Person_Specific)
     {
@@ -68,6 +70,12 @@ public:
         fans = new QLabel(Person_Specific);
         fans->setObjectName(QStringLiteral("fans"));
         fans->setGeometry(QRect(150, 220, 381, 41));
+        label_6 = new QLabel(Person_Specific);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(80, 290, 51, 31));
+        attentions = new QLabel(Person_Specific);
+        attentions->setObjectName(QStringLiteral("attentions"));
+        attentions->setGeometry(QRect(150, 300, 371, 41));
 
         retranslateUi(Person_Specific);
 
@@ -87,6 +95,8 @@ public:
         friends->setText(QString());
         label_5->setText(QApplication::translate("Person_Specific", "\345\205\261\345\220\214\347\262\211\344\270\235", Q_NULLPTR));
         fans->setText(QString());
+        label_6->setText(QApplication::translate("Person_Specific", "\345\205\261\345\220\214\345\205\263\346\263\250", Q_NULLPTR));
+        attentions->setText(QString());
     } // retranslateUi
 
 };
