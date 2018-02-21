@@ -17,7 +17,6 @@ class PlayAVL : public QWidget
 public:
     explicit PlayAVL(QWidget *parent = 0);
     void setData(NodeAVL *avl);
-    void updateUI();
     NodeAVL *bst;
     DrawAVL *drawAvl;
     void paintEvent(QPaintEvent *);

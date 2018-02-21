@@ -122,7 +122,6 @@ class BinTree {
 protected:
     int _size;    //记录该二叉树结点个数
     BinNodePosi(T)_root;    //二叉树树根节点指针
-
     virtual int updateHeight(BinNodePosi(T)x); //更新结点x的高度
     void updateHeightAbove(BinNodePosi(T)x); //更新x以及x的所有祖先元素的高度
     void updateDistanceToRoot(BinNodePosi(T)x);    //更新x结点及其孩子距离根节点的距离
@@ -169,7 +168,6 @@ template<typename T>
 BinNodePosi(T)BinTree<T>::siblingOf(BinNodePosi(T)x) {
     if (x->parent == 0)
         return 0;
-
     if (x->parent->lchild == x)
         return x->parent->rchild;
     else
@@ -202,7 +200,6 @@ template<typename T>
 BinTree<T>::~BinTree() {
     removeTreeByRootNode(_root);
 }
-
 
 //更新x结点的高度
 template<typename T>
@@ -280,31 +277,10 @@ int BinTree<T>::remove(BinNodePosi(T)x) {
     _size -= n;
     return n;
 }
-////分离子树 返回子树的树根
-//template <typename T>
-//BinNodePosi(T) BinTree<T>::secede(BinNodePosi(T) x)
-//{
-//    if (x->parent->lchild == x) x->parent->lchild = NULL;
-//    if (x->parent->rchild == x) x->parent->rchild = NULL;
-//
-//    updateHeightAbove(x->parent);
-//
-//    BinTree<T> * S = new BinTree<T>;
-//    S->_root = x;
-//    x->parent = NULL;
-//    S->_size = x->size();
-//
-//    _size -= S->size();
-//
-//    return S;
-//}
-
-
 
 template<typename T>
 void BinNode<T>::travPre_R(void visit(T)) {
     if (this == NULL) return;
-
     visit(this->data);
     this->lchild->travPre_R(visit);
     this->rchild->travPre_R(visit);
@@ -315,7 +291,6 @@ template<typename T>
 void BinNode<T>::travPre_I(void visit(T)) {
     stack<BinNodePosi(T)> stk;
     BinNodePosi(T)x;
-
     stk.push(this);
     while (!stk.empty()) {
         x = stk.top();
@@ -332,7 +307,6 @@ template<typename T>
 void BinNode<T>::traverPre(List<T> &data) {
     stack<BinNodePosi(T)> stk;
     BinNodePosi(T)x;
-
     stk.push(this);
     while (!stk.empty()) {
         x = stk.top();
@@ -358,18 +332,14 @@ template<typename T>
 void BinNode<T>::travIn_I(void visit(T)) {
     stack<BinNodePosi(T)> stk;
     BinNodePosi(T)x = this;
-
     stk.push(x);
     x = x->lchild;
-
     while (true) {
         while (x != NULL) {
             stk.push(x);
             x = x->lchild;
         }
-
         if (stk.empty()) break;
-
         x = stk.top();
         stk.pop();
         visit(x->data);
@@ -380,7 +350,6 @@ void BinNode<T>::travIn_I(void visit(T)) {
 template<typename T>
 void BinNode<T>::travPost_R(void visit(T)) {
     if (this == NULL) return;
-
     this->lchild->travPost_R(visit);
     this->rchild->travPost_R(visit);
     visit(this->data);
@@ -390,7 +359,6 @@ template<typename T>
 void BinNode<T>::travPost_I(void visit(T)) {
 
     stack<BinNodePosi(T)> stk;
-
     BinNodePosi(T)x = this;
     if (x) stk.push(this);
 
@@ -417,8 +385,6 @@ template<typename T>
 void BinNode<T>::travLevel(void visit(T)) {
     Queue<BinNodePosi(T)> q;
     BinNodePosi(T)x = this;
-
-
     q.enqueue(x);
     while (!q.empty()) {
         x = q.dequeue();

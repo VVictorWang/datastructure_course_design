@@ -40,7 +40,6 @@ void loginwindow::onLoginClicked(){
     }
 }
 
-
 void loginwindow::onDrawAVLClicked(){
     PlayAVL *play = new PlayAVL();
     play->setData(avl);
@@ -56,9 +55,8 @@ bool loginwindow::validUser(QString userId, QString name){
         InfoNode node;
         node.data.id = userId.toInt();
         node = avl->search(node)->data;
-        if(userId.toInt()==node.data.id)
+        if(userId.toInt()==node.data.id && name.toStdString().compare(node.data.userName) == 0)
             return true;
     }
-//    && name.toStdString().compare(node.data.userName) == 0
     return false;
 }

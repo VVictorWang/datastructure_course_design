@@ -24,17 +24,12 @@ protected:
     using BST<T>::_size;
 
     void rotateLL(BinNodePosi(T)p, BinNodePosi(T)q);
-
     void rotateRR(BinNodePosi(T)p, BinNodePosi(T)q);
-
-    void insertTree(List<T> tree2data);    //By rotate
     void insertFixUp2(BinNodePosi(T)p);    //By connect34
     using BST<T>::connect34;
 
 public:
     using BST<T>::search;
-    using BST<T>::replaceData;
-
     virtual BinNodePosi(T)insert(const T &);
 
     void build_avl(QJsonArray);
@@ -228,16 +223,6 @@ void AVL<T>::build_avl(QJsonArray data){
 
 
     }
-}
-
-template<typename T>
-void AVL<T>::insertTree(List<T> tree2data) {
-//    List<T> data2;
-//    tree2.traverPre(data2);
-
-
-
-
 }
 
 template<typename T>
