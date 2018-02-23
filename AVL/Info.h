@@ -14,7 +14,7 @@
 
 class Info {
     friend std::ostream &operator<<(std::ostream &out, const Info &t){
-        out << t.id;
+        out << t.id << '\t' <<t.userName;
 //        InfoNode *p = t.friends;
 //        out<<" friends: ";
 //        while(p!=NULL){

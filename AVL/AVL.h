@@ -34,11 +34,11 @@ public:
 
     void build_avl(QJsonArray);
 
-    List<T> avl_instersection(AVL<T>);
+    AVL<T> avl_instersection(AVL<T>);
 
-    List<T> avl_union(AVL<T>);
+    AVL<T>* avl_union(AVL<T>);
 
-    List<T> avl_difference(AVL<T>);
+    AVL<T> avl_difference(AVL<T>);
 
     bool avl_is_subtree(BinNodePosi(T));
 
@@ -324,13 +324,14 @@ bool AVL<T>::remove(const T &e) {
 }
 
 template<typename T>
-List<T> AVL<T>::avl_instersection(AVL<T> tree2) {
-    List<T> data2, result;
+AVL<T> AVL<T>::avl_instersection(AVL<T> tree2) {
+    List<T> data2;
+    AVL<T> result;
     tree2.traverPre(data2);
     Posi(T)p = data2.head();
     while (p != data2.tail()) {
         if (this->contains(p->data)) {
-            result.insertAsLast(p->data);
+            result.insert(p->data);
         }
         p = p->next;
     }
@@ -338,30 +339,30 @@ List<T> AVL<T>::avl_instersection(AVL<T> tree2) {
 }
 
 template<typename T>
-List<T> AVL<T>::avl_union(AVL<T> tree2) {
-//    List<T> tree1data, result;
-//    this->traverPre(tree1data);
-//    Posi(T)p = tree1data.head();
-//    cout << p->data << '\t';
-//    while (p != tree1data.tail()) {
-//        tree2.insert(p->data);
-//        p = p->next;
-//    }
-//    tree2.traverPre(result);
-//    return result;
+AVL<T>* AVL<T>::avl_union(AVL<T> tree2) {
+    List<T> tree1data;
+    this->traverPre(tree1data);
+    Posi(T)p = tree1data.head();
+    cout << p->data << '\t';
+    while (p != tree1data.tail()) {
+        tree2.insert(p->data);
+        p = p->next;
+    }
+    return &tree2;
 }
 
 template<typename T>
-List<T> AVL<T>::avl_difference(AVL<T> tree2) {
-    List<T> data2, result;
+AVL<T> AVL<T>::avl_difference(AVL<T> tree2) {
+    List<T> data2;
+//    AVL<T> result ;
     tree2.traverPre(data2);
     Posi(T)p = data2.head();
     while (p != data2.tail()) {
         this->remove(p->data);
         p = p->next;
     }
-    this->traverPre(result);
-    return result;
+//    this->traverPre(result);
+    return *this;
 }
 
 template<typename T>

@@ -6,9 +6,16 @@ PlayAVL::PlayAVL(QWidget *parent) :
     ui(new Ui::PlayAVL)
 {
     bst = new NodeAVL;
+    second = new SecondAvl;
     ui->setupUi(this);
+    this->setWindowTitle("AVL演示");
     QObject::connect(ui->insertBtn,SIGNAL(clicked(bool)),this,SLOT(on_add_clicked()));
     QObject::connect(ui->removeBtn,SIGNAL(clicked(bool)),this,SLOT(on_remove_clicked()));
+    QObject::connect(ui->interBtn,SIGNAL(clicked(bool)),this,SLOT(on_inter_clicked()));
+    QObject::connect(ui->differBtn,SIGNAL(clicked(bool)),this,SLOT(on_differ_clicked()));
+    QObject::connect(ui->unionBtn,SIGNAL(clicked(bool)),this,SLOT(on_union_clicked()));
+    QObject::connect(ui->resetBtn,SIGNAL(clicked(bool)),this,SLOT(on_reset_clicked()));
+    QObject::connect(ui->isSubBtn,SIGNAL(clicked(bool)),this,SLOT(on_is_subtree_clicked()));
 }
 
 void PlayAVL::paintEvent(QPaintEvent *){
@@ -52,9 +59,6 @@ void PlayAVL::paintEvent(QPaintEvent *){
 }
 
 void PlayAVL::setData(NodeAVL *avl){
-//    drawAvl->setData(avl);
-//    drawAvl->update();
-
     List<InfoNode> data;
     avl->traverPre(data);
     Posi(InfoNode) p = data.head();
@@ -64,6 +68,7 @@ void PlayAVL::setData(NodeAVL *avl){
         p = p->next;
         i++;
     }
+    origin = bst;
 }
 
 void PlayAVL::on_add_clicked(){
@@ -82,6 +87,94 @@ void PlayAVL::on_remove_clicked(){
     this->update();
 }
 
+void PlayAVL::on_inter_clicked(){
+    second->setData(0);
+    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
+    second->show();
+}
+
+void PlayAVL::on_differ_clicked(){
+    second->setData(1);
+    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
+    second->show();
+}
+
+void PlayAVL::on_union_clicked(){
+    second->setData(2);
+    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
+    second->show();
+}
+
+void PlayAVL::on_is_subtree_clicked(){
+    second->setData(3);
+    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
+    second->show();
+}
+
+void PlayAVL::on_reset_clicked(){
+    bst = origin;
+    this->update();
+}
+
+void PlayAVL::avl_union(NodeAVL *data){
+    List<InfoNode> tree1data;
+    data->traverPre(tree1data);
+    Posi(InfoNode)p = tree1data.head();
+    cout << p->data << '\t';
+    while (p != tree1data.tail()) {
+        bst->insert(p->data);
+        p = p->next;
+    }
+}
+
+void PlayAVL::avl_difference(NodeAVL *data){
+    List<InfoNode> data2;
+    data->traverPre(data2);
+    Posi(InfoNode)p = data2.head();
+    while (p != data2.tail()) {
+        bst->remove(p->data);
+        p = p->next;
+    }
+}
+
+void PlayAVL::avl_instersection(NodeAVL *data){
+    List<InfoNode> data2;
+    NodeAVL *result = new NodeAVL;
+    data->traverPre(data2);
+    Posi(InfoNode)p = data2.head();
+    while (p != data2.tail()) {
+        if (bst->contains(p->data)) {
+            result->insert(p->data);
+        }
+        p = p->next;
+    }
+    bst = result;
+}
+
+void PlayAVL::on_data_received(NodeAVL *data,int operation){
+    switch (operation) {
+    case 0:
+        avl_instersection(data);
+        break;
+    case 1:
+        avl_difference(data);
+        break;
+    case 2:
+        avl_union(data);
+        break;
+    case 3:
+        if(bst->avl_is_subtree(data->root())){
+            QMessageBox::information(this,"提示","该树是其子树");
+        }else {
+            QMessageBox::information(this,"提示","该树不是其子树");
+        }
+        break;
+    default:
+        break;
+    }
+
+    this->update();
+}
 
 PlayAVL::~PlayAVL()
 {

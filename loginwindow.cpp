@@ -14,9 +14,10 @@ loginwindow::loginwindow(QWidget *parent) :
         QJsonArray jsonOb = doc.object().value("data").toArray();
         avl = new AVL<InfoNode>;
         avl->build_avl(jsonOb);
-//        avl->display();
+        avl->display();
     }
     ui->setupUi(this);
+    this->setWindowTitle("登录");
     QObject::connect(ui->loginButton,SIGNAL(clicked(bool)),this,SLOT(onLoginClicked()));
     QObject::connect(ui->drawAVL,SIGNAL(clicked(bool)),this,SLOT(onDrawAVLClicked()));
 }
@@ -36,7 +37,7 @@ void loginwindow::onLoginClicked(){
         emit toMainWindow(userId.toInt(),avl);
         this->hide();
     }else{
-        qDebug() <<"error";
+        QMessageBox::warning(this,"警告","用户id或用户名错误");
     }
 }
 

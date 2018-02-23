@@ -6,6 +6,7 @@ Person_Specific::Person_Specific(QWidget *parent) :
     ui(new Ui::Person_Specific)
 {
     ui->setupUi(this);
+    this->setWindowTitle("详细信息");
 }
 
 Person_Specific::~Person_Specific()
@@ -35,6 +36,9 @@ void Person_Specific::setData(NodeAVL *total,int current,int user){
     NodeAVL friends = build_avl_by_list(node.data.friends);
     NodeAVL fans = build_avl_by_list(node.data.fans);
     NodeAVL attentions = build_avl_by_list(node.data.attention);
+    ui->fanCount->setText(QString::fromStdString(to_string(fans.size())).append("人"));
+    ui->friendCount->setText(QString::fromStdString(to_string(friends.size())).append("人"));
+    ui->attentionCount->setText(QString::fromStdString(to_string(attentions.size())).append("人"));
 
     node.data.id = userId;
     node = total->search(node)->data;

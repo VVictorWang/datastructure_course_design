@@ -34,6 +34,8 @@ public:
     QLabel *fans;
     QLabel *label_6;
     QLabel *attentions;
+    QLabel *label_7;
+    QLabel *attentionCount;
 
     void setupUi(QWidget *Person_Specific)
     {
@@ -60,22 +62,28 @@ public:
         friendCount->setGeometry(QRect(130, 90, 51, 21));
         label_4 = new QLabel(Person_Specific);
         label_4->setObjectName(QStringLiteral("label_4"));
-        label_4->setGeometry(QRect(80, 140, 51, 31));
+        label_4->setGeometry(QRect(80, 150, 51, 31));
         friends = new QLabel(Person_Specific);
         friends->setObjectName(QStringLiteral("friends"));
-        friends->setGeometry(QRect(150, 150, 361, 51));
+        friends->setGeometry(QRect(150, 160, 361, 61));
         label_5 = new QLabel(Person_Specific);
         label_5->setObjectName(QStringLiteral("label_5"));
         label_5->setGeometry(QRect(80, 220, 51, 21));
         fans = new QLabel(Person_Specific);
         fans->setObjectName(QStringLiteral("fans"));
-        fans->setGeometry(QRect(150, 220, 381, 41));
+        fans->setGeometry(QRect(140, 220, 391, 61));
         label_6 = new QLabel(Person_Specific);
         label_6->setObjectName(QStringLiteral("label_6"));
-        label_6->setGeometry(QRect(80, 290, 51, 31));
+        label_6->setGeometry(QRect(80, 280, 51, 31));
         attentions = new QLabel(Person_Specific);
         attentions->setObjectName(QStringLiteral("attentions"));
-        attentions->setGeometry(QRect(150, 300, 371, 41));
+        attentions->setGeometry(QRect(140, 290, 381, 61));
+        label_7 = new QLabel(Person_Specific);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(80, 120, 41, 21));
+        attentionCount = new QLabel(Person_Specific);
+        attentionCount->setObjectName(QStringLiteral("attentionCount"));
+        attentionCount->setGeometry(QRect(130, 120, 61, 21));
 
         retranslateUi(Person_Specific);
 
@@ -97,6 +105,8 @@ public:
         fans->setText(QString());
         label_6->setText(QApplication::translate("Person_Specific", "\345\205\261\345\220\214\345\205\263\346\263\250", Q_NULLPTR));
         attentions->setText(QString());
+        label_7->setText(QApplication::translate("Person_Specific", "\345\205\263\346\263\250\346\225\260", Q_NULLPTR));
+        attentionCount->setText(QString());
     } // retranslateUi
 
 };
