@@ -7,6 +7,7 @@ PlayAVL::PlayAVL(QWidget *parent) :
 {
     bst = new NodeAVL;
     second = new SecondAvl;
+    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
     ui->setupUi(this);
     this->setWindowTitle("AVL演示");
     QObject::connect(ui->insertBtn,SIGNAL(clicked(bool)),this,SLOT(on_add_clicked()));
@@ -89,25 +90,21 @@ void PlayAVL::on_remove_clicked(){
 
 void PlayAVL::on_inter_clicked(){
     second->setData(0);
-    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
     second->show();
 }
 
 void PlayAVL::on_differ_clicked(){
     second->setData(1);
-    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
     second->show();
 }
 
 void PlayAVL::on_union_clicked(){
     second->setData(2);
-    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
     second->show();
 }
 
 void PlayAVL::on_is_subtree_clicked(){
     second->setData(3);
-    connect(second,SIGNAL(sendData(NodeAVL*,int)),this,SLOT(on_data_received(NodeAVL*,int)));
     second->show();
 }
 
@@ -163,16 +160,15 @@ void PlayAVL::on_data_received(NodeAVL *data,int operation){
         avl_union(data);
         break;
     case 3:
-        if(bst->avl_is_subtree(data->root())){
-            QMessageBox::information(this,"提示","该树是其子树");
+        if(bst->avl_is_subtree(data)){
+            QMessageBox::information(this,"提示","该集合是其子集");
         }else {
-            QMessageBox::information(this,"提示","该树不是其子树");
+            QMessageBox::information(this,"提示","该集合不是其子集");
         }
         break;
     default:
         break;
     }
-
     this->update();
 }
 

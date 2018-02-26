@@ -40,7 +40,7 @@ public:
 
     AVL<T> avl_difference(AVL<T>);
 
-    bool avl_is_subtree(BinNodePosi(T));
+    bool avl_is_subtree(AVL<T> *);
 
     bool avl_equals(AVL<T> *);
 
@@ -71,7 +71,6 @@ void AVL<T>::rotateLL(BinNodePosi(T)t1, BinNodePosi(T)t2) {
     if (t2->parent == NULL) {
         t1->parent = NULL;
         this->_root = t1;
-
         t2->parent = t1;
         return;
     }
@@ -126,10 +125,7 @@ template<typename T>
 BinNodePosi(T)AVL<T>::insert(const T &e) {
     BinNodePosi(T)p = search(e);
     if (p != NULL && p->data == e)    //already exist
-    {
         return p;
-    }
-
     BinNodePosi(T)x = new BinNode<T>(e, _hot);
     if (_hot == NULL)    //empty tree
     {
@@ -220,8 +216,6 @@ void AVL<T>::build_avl(QJsonArray data){
              node =p;
          }
          pos->data.data.attention = head->next;
-
-
     }
 }
 
@@ -231,7 +225,6 @@ void AVL<T>::insertFixUp2(BinNodePosi(T)p) {
     BinNodePosi(T)mid;
     mid = tallerChild(p);
     q = tallerChild(mid);
-
     BinNodePosi(T)par = p->parent;
     enum {
         ROOT, LEFT, RIGHT
@@ -366,25 +359,27 @@ AVL<T> AVL<T>::avl_difference(AVL<T> tree2) {
 }
 
 template<typename T>
-bool AVL<T>::avl_is_subtree(BinNodePosi(T)tree) {
+bool AVL<T>::avl_is_subtree(AVL<T> *tree) {
     if (tree == NULL) {
         return true;
     }
-    if (this->contains(tree->data)) {
-        if (!avl_is_subtree(tree->lchild)) {
+    List<InfoNode> data;
+    tree->traverPre(data);
+    Posi(InfoNode) p = data.head();
+    while(p!=data.tail()){
+        if(!(this->contains(p->data)))
             return false;
-        }
-        return avl_is_subtree(tree->rchild);
+        p = p->next;
     }
-    return false;
+    return true;
 }
 
 template<typename T>
 bool AVL<T>::avl_equals(AVL<T> *tree) {
-    if (!this->avl_is_subtree(tree->root())) {
+    if (!this->avl_is_subtree(tree)) {
         return false;
     }
-    return tree->avl_is_subtree(this->root());
+    return tree->avl_is_subtree(this);
 }
 
 template <typename T>

@@ -44,8 +44,8 @@ public:
 
     int size();    //计算以该结点为根的二叉树结点个数（递归算法）
 
-    BinNodePosi(T)insertAsLC(T const &);    //插入左孩子
-    BinNodePosi(T)insertAsRC(T const &);    //插入右孩子
+//    BinNodePosi(T)insertAsLC(T const &);    //插入左孩子
+//    BinNodePosi(T)insertAsRC(T const &);    //插入右孩子
     BinNodePosi(T)succ();    //返回中序遍历时该结点的后继指针
     void replaceData(const T &);
     //遍历算法
@@ -101,15 +101,15 @@ int BinNode<T>::size() {
 }
 
 
-template<typename T>
-BinNodePosi(T)BinNode<T>::insertAsLC(T const &e) {
-    return lchild = new BinNode(e, this);
-}
+//template<typename T>
+//BinNodePosi(T)BinNode<T>::insertAsLC(T const &e) {
+//    return lchild = new BinNode(e, this);
+//}
 
-template<typename T>
-BinNodePosi(T)BinNode<T>::insertAsRC(T const &e) {
-    return rchild = new BinNode(e, this);
-}
+//template<typename T>
+//BinNodePosi(T)BinNode<T>::insertAsRC(T const &e) {
+//    return rchild = new BinNode(e, this);
+//}
 
 template<typename T>
 void BinNode<T>::replaceData(const T &t) {
@@ -141,13 +141,15 @@ public:
     BinNodePosi(T)root() const { return _root; }    //返回根节点指针
 
     //拓扑连接
-    BinNodePosi(T)insertAsLC(BinNodePosi(T)x, T const &e);    //把e作为x的左孩子插入
-    BinNodePosi(T)insertAsRC(BinNodePosi(T)x, T const &e);    //把e作为x的右孩子插入
-    BinNodePosi(T)attachAsLC(BinNodePosi(T)x, BinTree<T> *&S);    //把S作为x的左子树插入
-    BinNodePosi(T)attachAsRC(BinNodePosi(T)x, BinTree<T> *&S);    //把S作为x的右子树插入
+//    BinNodePosi(T)insertAsLC(BinNodePosi(T)x, T const &e);    //把e作为x的左孩子插入
+//    BinNodePosi(T)insertAsRC(BinNodePosi(T)x, T const &e);    //把e作为x的右孩子插入
+//    BinNodePosi(T)attachAsLC(BinNodePosi(T)x, BinTree<T> *&S);    //把S作为x的左子树插入
+//    BinNodePosi(T)attachAsRC(BinNodePosi(T)x, BinTree<T> *&S);    //把S作为x的右子树插入
 
     //删除x结点
     virtual int remove(BinNodePosi(T)x);
+
+    void destroy();
 
     //将以x为根的子树从树中删去
     BinNodePosi(T)secede(BinNodePosi(T)x);
@@ -216,54 +218,54 @@ void BinTree<T>::updateHeightAbove(BinNodePosi(T)x) {
     }
 }
 
-//拓扑连接 步骤为更新size 插入 更新高度
-template<typename T>
-BinNodePosi(T)BinTree<T>::insertAsLC(BinNodePosi(T)x, T const &e) {
-    ++_size;
-    x->insertAsLC(e);
-    updateHeightAbove(x);
-    return x->lchild;
-}
+////拓扑连接 步骤为更新size 插入 更新高度
+//template<typename T>
+//BinNodePosi(T)BinTree<T>::insertAsLC(BinNodePosi(T)x, T const &e) {
+//    ++_size;
+//    x->insertAsLC(e);
+//    updateHeightAbove(x);
+//    return x->lchild;
+//}
 
-template<typename T>
-BinNodePosi(T)BinTree<T>::insertAsRC(BinNodePosi(T)x, T const &e) {
-    ++_size;
-    x->insertAsRC(e);
-    updateHeightAbove(x);
-    return x->rchild;
-}
+//template<typename T>
+//BinNodePosi(T)BinTree<T>::insertAsRC(BinNodePosi(T)x, T const &e) {
+//    ++_size;
+//    x->insertAsRC(e);
+//    updateHeightAbove(x);
+//    return x->rchild;
+//}
 
-template<typename T>
-BinNodePosi(T)BinTree<T>::attachAsLC(BinNodePosi(T)x, BinTree<T> *&S) {
-    x->lchild = S->_root;
-    if (x->lchild) x->lchild->parent = x;
+//template<typename T>
+//BinNodePosi(T)BinTree<T>::attachAsLC(BinNodePosi(T)x, BinTree<T> *&S) {
+//    x->lchild = S->_root;
+//    if (x->lchild) x->lchild->parent = x;
 
-    _size += S->_size;
-    updateHeightAbove(x);
+//    _size += S->_size;
+//    updateHeightAbove(x);
 
-    S->_root = NULL;
-    S->_size = 0;
-    delete S;
-    S = NULL;
+//    S->_root = NULL;
+//    S->_size = 0;
+//    delete S;
+//    S = NULL;
 
-    return x;
-}
+//    return x;
+//}
 
-template<typename T>
-BinNodePosi(T)BinTree<T>::attachAsRC(BinNodePosi(T)x, BinTree<T> *&S) {
-    x->rchild = S->_root;
-    if (x->rchild) x->rchild->parent = x;
+//template<typename T>
+//BinNodePosi(T)BinTree<T>::attachAsRC(BinNodePosi(T)x, BinTree<T> *&S) {
+//    x->rchild = S->_root;
+//    if (x->rchild) x->rchild->parent = x;
 
-    _size += S->_size;
-    updateHeightAbove(x);
+//    _size += S->_size;
+//    updateHeightAbove(x);
 
-    S->_root = NULL;
-    S->_size = 0;
-    delete S;
-    S = NULL;
+//    S->_root = NULL;
+//    S->_size = 0;
+//    delete S;
+//    S = NULL;
 
-    return x;
-}
+//    return x;
+//}
 
 //删除结点
 template<typename T>
@@ -276,6 +278,13 @@ int BinTree<T>::remove(BinNodePosi(T)x) {
     int n = removeTreeByRootNode(x);
     _size -= n;
     return n;
+}
+
+template<typename T>
+void BinTree<T>::destroy(){
+    removeTreeByRootNode(this->root());
+    delete this;
+    this = NULL;
 }
 
 template<typename T>
@@ -455,8 +464,6 @@ void BinTree<T>::calculatePosition() {
         x->horizontal_position *= 4;    //水平位置放缩4倍 命令行显示时结点之间的空隙4个字符
         x = x->succ();
     }
-
-
 }
 
 template<typename T>
@@ -478,14 +485,11 @@ void BinTree<T>::display() {
         long long int tmpposi;
         if (x) {
             nowheight = x->distance_to_root;
-
             if (nowheight != lastheight) {
                 lastheight = nowheight;
                 cout << endl;
                 levelcount = 0;
             }
-
-
             for (i = levelcount; i < posilchild(x); ++i) {
                 printf(" ");
             }
