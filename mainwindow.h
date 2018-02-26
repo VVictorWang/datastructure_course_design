@@ -5,6 +5,7 @@
 #include "./AVL/AVL.h"
 #include "people_list.h"
 #include <QTabWidget>
+#include "search_common.h"
 
 namespace Ui {
 class MainWindow;

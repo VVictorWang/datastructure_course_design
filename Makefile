@@ -56,12 +56,16 @@ SOURCES       = main.cpp \
 		people_list.cpp \
 		person_specific.cpp \
 		playavl.cpp \
-		secondavl.cpp moc_mainwindow.cpp \
+		secondavl.cpp \
+		people_add.cpp \
+		search_common.cpp moc_mainwindow.cpp \
 		moc_loginwindow.cpp \
 		moc_people_list.cpp \
 		moc_person_specific.cpp \
 		moc_playavl.cpp \
-		moc_secondavl.cpp
+		moc_secondavl.cpp \
+		moc_people_add.cpp \
+		moc_search_common.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
 		loginwindow.o \
@@ -69,12 +73,16 @@ OBJECTS       = main.o \
 		person_specific.o \
 		playavl.o \
 		secondavl.o \
+		people_add.o \
+		search_common.o \
 		moc_mainwindow.o \
 		moc_loginwindow.o \
 		moc_people_list.o \
 		moc_person_specific.o \
 		moc_playavl.o \
-		moc_secondavl.o
+		moc_secondavl.o \
+		moc_people_add.o \
+		moc_search_common.o
 DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		/usr/lib/qt/mkspecs/common/unix.conf \
 		/usr/lib/qt/mkspecs/common/linux.conf \
@@ -191,13 +199,17 @@ DIST          = /usr/lib/qt/mkspecs/features/spec_pre.prf \
 		people_list.h \
 		person_specific.h \
 		playavl.h \
-		secondavl.h main.cpp \
+		secondavl.h \
+		people_add.h \
+		search_common.h main.cpp \
 		mainwindow.cpp \
 		loginwindow.cpp \
 		people_list.cpp \
 		person_specific.cpp \
 		playavl.cpp \
-		secondavl.cpp
+		secondavl.cpp \
+		people_add.cpp \
+		search_common.cpp
 QMAKE_TARGET  = datas_structure
 DESTDIR       = 
 TARGET        = datas_structure
@@ -206,7 +218,7 @@ TARGET        = datas_structure
 first: all
 ####### Build rules
 
-$(TARGET): ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h ui_secondavl.h $(OBJECTS)  
+$(TARGET): ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h ui_secondavl.h ui_people_add.h ui_search_common.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: datas_structure.pro /usr/lib/qt/mkspecs/linux-g++/qmake.conf /usr/lib/qt/mkspecs/features/spec_pre.prf \
@@ -455,9 +467,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/qt/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.h loginwindow.h people_list.h person_specific.h playavl.h secondavl.h $(DISTDIR)/
-	$(COPY_FILE) --parents main.cpp mainwindow.cpp loginwindow.cpp people_list.cpp person_specific.cpp playavl.cpp secondavl.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents mainwindow.ui loginwindow.ui people_list.ui person_specific.ui playavl.ui secondavl.ui $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.h loginwindow.h people_list.h person_specific.h playavl.h secondavl.h people_add.h search_common.h $(DISTDIR)/
+	$(COPY_FILE) --parents main.cpp mainwindow.cpp loginwindow.cpp people_list.cpp person_specific.cpp playavl.cpp secondavl.cpp people_add.cpp search_common.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents mainwindow.ui loginwindow.ui people_list.ui person_specific.ui playavl.ui secondavl.ui people_add.ui search_common.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -489,9 +501,9 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/qt/mkspecs/features/data/dummy.cpp
 	g++ -pipe -g -Wall -W -dM -E -o moc_predefs.h /usr/lib/qt/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp moc_playavl.cpp moc_secondavl.cpp
+compiler_moc_header_make_all: moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp moc_playavl.cpp moc_secondavl.cpp moc_people_add.cpp moc_search_common.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp moc_playavl.cpp moc_secondavl.cpp
+	-$(DEL_FILE) moc_mainwindow.cpp moc_loginwindow.cpp moc_people_list.cpp moc_person_specific.cpp moc_playavl.cpp moc_secondavl.cpp moc_people_add.cpp moc_search_common.cpp
 moc_mainwindow.cpp: AVL/AVL.h \
 		AVL/BST.h \
 		AVL/BinTree.h \
@@ -500,6 +512,8 @@ moc_mainwindow.cpp: AVL/AVL.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
+		people_add.h \
+		search_common.h \
 		mainwindow.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -514,6 +528,8 @@ moc_loginwindow.cpp: mainwindow.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
+		people_add.h \
+		search_common.h \
 		playavl.h \
 		secondavl.h \
 		loginwindow.h \
@@ -528,6 +544,7 @@ moc_people_list.cpp: AVL/AVL.h \
 		AVL/List.h \
 		AVL/Info.h \
 		person_specific.h \
+		people_add.h \
 		people_list.h \
 		moc_predefs.h \
 		/usr/bin/moc
@@ -567,11 +584,29 @@ moc_secondavl.cpp: AVL/AVL.h \
 		/usr/bin/moc
 	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include secondavl.h -o moc_secondavl.cpp
 
+moc_people_add.cpp: AVL/Info.h \
+		AVL/List.h \
+		people_add.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include people_add.h -o moc_people_add.cpp
+
+moc_search_common.cpp: AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		search_common.h \
+		moc_predefs.h \
+		/usr/bin/moc
+	/usr/bin/moc $(DEFINES) --include ./moc_predefs.h -I/usr/lib/qt/mkspecs/linux-g++ -I/home/victor/qt/datas_structure -I/usr/include/qt -I/usr/include/qt/QtWidgets -I/usr/include/qt/QtGui -I/usr/include/qt/QtCore -I/usr/include/c++/7.2.0 -I/usr/include/c++/7.2.0/x86_64-pc-linux-gnu -I/usr/include/c++/7.2.0/backward -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include -I/usr/local/include -I/usr/lib/gcc/x86_64-pc-linux-gnu/7.2.0/include-fixed -I/usr/include search_common.h -o moc_search_common.cpp
+
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all: ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h ui_secondavl.h
+compiler_uic_make_all: ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h ui_secondavl.h ui_people_add.h ui_search_common.h
 compiler_uic_clean:
-	-$(DEL_FILE) ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h ui_secondavl.h
+	-$(DEL_FILE) ui_mainwindow.h ui_loginwindow.h ui_people_list.h ui_person_specific.h ui_playavl.h ui_secondavl.h ui_people_add.h ui_search_common.h
 ui_mainwindow.h: mainwindow.ui \
 		/usr/bin/uic
 	/usr/bin/uic mainwindow.ui -o ui_mainwindow.h
@@ -596,6 +631,14 @@ ui_secondavl.h: secondavl.ui \
 		/usr/bin/uic
 	/usr/bin/uic secondavl.ui -o ui_secondavl.h
 
+ui_people_add.h: people_add.ui \
+		/usr/bin/uic
+	/usr/bin/uic people_add.ui -o ui_people_add.h
+
+ui_search_common.h: search_common.ui \
+		/usr/bin/uic
+	/usr/bin/uic search_common.ui -o ui_search_common.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
@@ -615,6 +658,8 @@ main.o: main.cpp mainwindow.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
+		people_add.h \
+		search_common.h \
 		loginwindow.h \
 		playavl.h \
 		secondavl.h
@@ -629,6 +674,8 @@ mainwindow.o: mainwindow.cpp mainwindow.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
+		people_add.h \
+		search_common.h \
 		ui_mainwindow.h \
 		loginwindow.h \
 		playavl.h \
@@ -645,6 +692,8 @@ loginwindow.o: loginwindow.cpp loginwindow.h \
 		AVL/Info.h \
 		people_list.h \
 		person_specific.h \
+		people_add.h \
+		search_common.h \
 		playavl.h \
 		secondavl.h \
 		ui_loginwindow.h
@@ -658,6 +707,7 @@ people_list.o: people_list.cpp people_list.h \
 		AVL/List.h \
 		AVL/Info.h \
 		person_specific.h \
+		people_add.h \
 		ui_people_list.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o people_list.o people_list.cpp
 
@@ -692,6 +742,22 @@ secondavl.o: secondavl.cpp secondavl.h \
 		ui_secondavl.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o secondavl.o secondavl.cpp
 
+people_add.o: people_add.cpp people_add.h \
+		AVL/Info.h \
+		AVL/List.h \
+		ui_people_add.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o people_add.o people_add.cpp
+
+search_common.o: search_common.cpp search_common.h \
+		AVL/AVL.h \
+		AVL/BST.h \
+		AVL/BinTree.h \
+		AVL/Queue.h \
+		AVL/List.h \
+		AVL/Info.h \
+		ui_search_common.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o search_common.o search_common.cpp
+
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp
 
@@ -709,6 +775,12 @@ moc_playavl.o: moc_playavl.cpp
 
 moc_secondavl.o: moc_secondavl.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_secondavl.o moc_secondavl.cpp
+
+moc_people_add.o: moc_people_add.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_people_add.o moc_people_add.cpp
+
+moc_search_common.o: moc_search_common.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_search_common.o moc_search_common.cpp
 
 ####### Install
 

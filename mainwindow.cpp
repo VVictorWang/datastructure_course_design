@@ -51,4 +51,8 @@ void MainWindow::enterMainWindow(int user,NodeAVL *info){
     }
     attentions->setData(attentionAvl,avl,userId);
     ui->tabs->addTab(attentions,icon1,"attentions");
+
+    Search_Common *search_com = new Search_Common;
+    search_com->setData(avl);
+    ui->tabs->addTab(search_com,icon1,"共同好友查询");
 }

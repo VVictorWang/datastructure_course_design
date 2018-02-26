@@ -29,18 +29,24 @@ SOURCES += main.cpp\
     people_list.cpp \
     person_specific.cpp \
     playavl.cpp \
-    secondavl.cpp
+    secondavl.cpp \
+    people_add.cpp \
+    search_common.cpp
 
 HEADERS  += mainwindow.h \
     loginwindow.h \
     people_list.h \
     person_specific.h \
     playavl.h \
-    secondavl.h
+    secondavl.h \
+    people_add.h \
+    search_common.h
 
 FORMS    += mainwindow.ui \
     loginwindow.ui \
     people_list.ui \
     person_specific.ui \
     playavl.ui \
-    secondavl.ui
+    secondavl.ui \
+    people_add.ui \
+    search_common.ui

@@ -126,7 +126,6 @@ protected:
     void updateHeightAbove(BinNodePosi(T)x); //更新x以及x的所有祖先元素的高度
     void updateDistanceToRoot(BinNodePosi(T)x);    //更新x结点及其孩子距离根节点的距离
     void calculatePosition();   //计算结点位置 结果存放在每个结点的horizontal_position和distance_to_root中
-
     BinNodePosi(T)siblingOf(BinNodePosi(T)x);    //返回结点x的兄弟结点
 public:
     BinTree(BinNodePosi(T)root);

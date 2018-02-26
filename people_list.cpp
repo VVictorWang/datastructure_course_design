@@ -6,6 +6,8 @@ people_list::people_list(QWidget *parent) :
     ui(new Ui::people_list)
 {
     ui->setupUi(this);
+    QObject::connect(ui->addBtn,SIGNAL(clicked(bool)),this,SLOT(on_add_clicked()));
+    QObject::connect(ui->deleBtn,SIGNAL(clicked(bool)),this,SLOT(on_delete_clicked()));
 }
 
 people_list::~people_list()
@@ -39,6 +41,25 @@ void people_list::setData(NodeAVL *data,NodeAVL *total,int user){
         p = p->next;
     }
     connect(ui->listWidget,SIGNAL(itemDoubleClicked(QListWidgetItem*)),this,SLOT(toPerson_Specific(QListWidgetItem *)));
+}
+
+void people_list::on_add_clicked(){
+    people_add *peadd = new people_add;
+    peadd->show();
+    connect(peadd,SIGNAL(sendData(ListNode<Info>)),this,SLOT(on_Infodata_received(ListNode<Info>)));
+}
+
+void people_list::on_Infodata_received(InfoNode info){
+    QListWidgetItem *item = new QListWidgetItem;
+    item->setText(QString::fromStdString(info.data.userName));
+    ui->listWidget->addItem(item);
+    ui->listWidget->update();
+}
+
+void people_list::on_delete_clicked(){
+    ui->listWidget->removeItemWidget(ui->listWidget->currentItem());
+    delete ui->listWidget->currentItem();
+    ui->listWidget->update();
 }
 
 void people_list::toPerson_Specific(QListWidgetItem *current){

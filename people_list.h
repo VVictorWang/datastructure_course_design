@@ -6,6 +6,8 @@
 #include <QListWidgetItem>
 #include <QListWidget>
 #include "person_specific.h"
+#include "people_add.h"
+
 namespace Ui {
 class people_list;
 }
@@ -25,6 +27,11 @@ public:
 
 public slots:
      void toPerson_Specific(QListWidgetItem *);
+     void on_add_clicked();
+     void on_delete_clicked();
+
+     void on_Infodata_received(InfoNode info);
+
 private:
     Ui::people_list *ui;
 };
